@@ -24,9 +24,13 @@ module ZofoPlot
 			# Before setting a value
 			assert_nil my_line.color
 
-			# Setting a value - regular setter or generalized setter
+			# Setting a value - regular or generalized setter
 			my_line.width=1; assert_equal 1, my_line.width
 			my_line.width 2; assert_equal 2, my_line.width
+			
+			# Regular and generalized setter return the (new) value
+			assert_equal 3, (my_line.width=3)
+			assert_equal 4, (my_line.width 4)
 
 			# Modify a value - regular setter, regular getter, block
 			my_line.name="hello"      ; assert_equal "hello", my_line.name
