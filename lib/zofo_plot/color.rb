@@ -2,10 +2,11 @@ require_relative 'container'
 require_relative 'element'
 
 module ZofoPlot
-	#Color.new(0, 127, 255)
-	#Color.new([0, 127, 255])
-	#Color.new("007fff")
-	#Color.new("#007fff")
+    # Ways to create a color:
+	#   * RGB as individual parameters:    Color.new(0, 127, 255)
+	#   * RGB as array:                    Color.new([0, 127, 255])
+	#   * HTML notation:                   Color.new("#007fff")
+    #   * HTML notation without hash sign: Color.new("007fff")
 	class Color
 		include Container
 		include Element
