@@ -1,3 +1,46 @@
+# FIXME current: we want to use the generalized setter to set an attribute
+# to something other than simply a reference.
+#
+# Example:
+#   color          is a zofo_attribute  of line
+#   red/green/blue are  zofo_attributes of color
+#
+# Calling a block in the context of the attribute: 
+#   line.color { red 255; green 0; blue 255 }
+#
+# Setting a value by regular or generalized setter:
+#   line.color my_color
+#   line.color=my_color
+#
+# Assigning a converted value by generalized setter:
+#   line.color "#ff00ff"
+#   line.color [255, 0, 255]
+#   line.color 255, 0, 255
+#   line.color hash, where hash = { red => 255, green => 0, blue => 255 }
+#     Note that we can't specify a hash literal, this would clash with a block 
+#
+# Do we want to allow assigning a converted value by regular setter?
+#   1. this does not preserve assignment semantics
+#   2. check this - if left is sometimes the same as right and sometimes not,
+#      it's probably not a good idea:
+#      class Foo
+#        def x(*args) ; p args; end
+#        def x=(*args); p args; end
+#      end
+#
+#      foo=Foo.new
+#      foo.x [1,2,3]; foo.x=[1,2,3]
+#      foo.x 1,2,3  ; foo.x=1,2,3
+#      foo.x arr    ; foo.x=arr
+ 
+
+
+# Old: We don't allow assigning a converted value by regular setter, for two reasons:
+#   1. `line.color=255, 0, 255` passes an array to the setter: [255, 0, 255]
+#        1. line.color [a,b,c] could mean something different from line.color=[a,b,c]
+#        2. 
+#   2. We want to preserve setter semantics.
+
 module ZofoPlot
 	# Provides a generalized setter/getter.
 	#
