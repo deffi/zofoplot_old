@@ -4,8 +4,6 @@ require 'test/unit'
 
 require_relative "../lib/zofo_plot"
 
-p __FILE__
-
 module ZofoPlot
 	class ContainerTest <Test::Unit::TestCase
 		class MyContainer
