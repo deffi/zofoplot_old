@@ -6,26 +6,32 @@ require_relative "../lib/zofo_plot"
 
 module ZofoPlot
 	class ContainerTest <Test::Unit::TestCase
-		class MyContainer
-			include ZofoPlot::Container
-			zofo_attributes :foo, :bar
+		class MyColor
+		    include ZofoPlot::Container
+		    
+		    zofo_attributes :red, :green, :blue
 		end
-
+		
+		class MyLine
+		    include ZofoPlot::Container
+		    
+		    zofo_attributes :width, :name, :color
+		end
+		
 		def test_attributes
-			my_container=MyContainer.new
+			my_line =MyLine .new
 
 			# Before setting a value
-			assert_nil my_container.foo
+			assert_nil my_line.color
 
-			# Set a value in the various ways
-			my_container.foo=1; assert_equal 1, my_container.foo
-			my_container.foo 2; assert_equal 2, my_container.foo
+			# Setting a value - regular setter or generalized setter
+			my_line.width=1; assert_equal 1, my_line.width
+			my_line.width 2; assert_equal 2, my_line.width
 
-			# Call a block in the context of the value
-			my_container.bar="hello"
-			assert_equal "hello", my_container.bar
-			my_container.bar { upcase! }
-			assert_equal "HELLO", my_container.bar
+			# Modify a value - regular setter, regular getter, block
+			my_line.name="hello"      ; assert_equal "hello", my_line.name
+            my_line.name.upcase!      ; assert_equal "HELLO", my_line.name
+			my_line.name { downcase! }; assert_equal "hello", my_line.name
 		end
 	end
 end
