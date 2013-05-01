@@ -1,4 +1,4 @@
-# FIXME current: we want to use the generalized setter to set an attribute
+# FIXME current: proper documentation for this
 # to something other than simply a reference.
 #
 # Example:
@@ -69,27 +69,30 @@ module ZofoPlot
 		def self.included(klass)
 			klass.extend(ClassMethods)
 
-			# TODO: why doesn't this work?
-			#klass.instance_eval {
-			#  puts "Initialize @@zofo_attributes of #{self}"
-			#  @@zofo_attributes={}
-			#}
+			# Initialize the @zofo_attributes instance variable of the class (!) to an
+			# empty hash. This variable is used to store additional information about
+			# the attributes. The zofo_attributes class method, which is used for
+			# defining attributes, also acts as a getter for this variable. 
+			klass.instance_variable_set :@zofo_attributes, Hash.new
 		end
 
 		module ClassMethods
 		  def zofo_attribute(name, klass)
+		    # Create a generalize setter/getter
 		    zofo_attributes name
-		    #puts "Added attribute to #{self}"
-		    # FIXME CURRENT this is wrong: it applies to all Containers like this  
-		    @@zofo_attributes ||= {}
-		    @@zofo_attributes[name]=klass
-		    #puts "Added attribute #{name}, now we have #{@@zofo_attributes}"
+		    
+		    # Store the metadata
+		    @zofo_attributes[name]=klass
 		  end
 		  
 		  # FIXME allow specifying a class (like for zofo_attribute) using a hash
 			def zofo_attributes(*attributes)
 				attr_writer *attributes
 
+				# If no attributes are specified, this class acts as a getter for the
+				# zofo_attributes instance variable of the class (!)
+				return @zofo_attributes if attributes.empty? 
+				
 				# For each attribute, define the generalized setter. The
 				# generalized setter accepts a value or a proc and always returns
 				# the (new) value.
@@ -101,8 +104,7 @@ module ZofoPlot
 						# Set the value, if a value or multiple values were given
 						unless args.empty?
               # Retrieve the expected class for this attribute
-						  @@zofo_attributes ||= {}
-						  expected_class=@@zofo_attributes[attribute]
+              expected_class=self.class.zofo_attributes[attribute]
               
               # args.size | expected_class | action | comments
               # ----------+----------------+--------+-----
@@ -146,6 +148,8 @@ module ZofoPlot
 						return value
 					}
 				}
+				
+				@zofo_attributes
 			end
 		end
 	end
