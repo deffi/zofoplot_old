@@ -33,7 +33,8 @@ module ZofoPlot
 		    zofo_attributes :width, :name
 		end
 		
-		# A class which also defines a color attribute, but without a default class 
+		# A class which also defines a color attribute, but without a default class
+		# This class does not contain any default classes at all. 
 		class MyOther
 		  include ZofoPlot::Container
 		  zofo_attributes :color
