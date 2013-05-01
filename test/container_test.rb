@@ -57,11 +57,15 @@ module ZofoPlot
       assert_equal MyColor, my_line.color.class
       assert_equal [0, 127, 255], my_line.color.to_a
       
-      # Generalized create a value
+      # Generalized create a value (single argument)
       my_line.color "#007fff"
       assert_equal MyColor, my_line.color.class
       assert_equal [0, 127, 255], my_line.color.to_a
 
+      # Generalized create a value (multiple arguments)
+      my_line.color 0, 127, 255
+      assert_equal MyColor, my_line.color.class
+      assert_equal [0, 127, 255], my_line.color.to_a
 		end
 	end
 end
