@@ -33,9 +33,19 @@ module ZofoPlot
 		    zofo_attributes :width, :name
 		end
 		
+		# A class which also defines a color attribute, but without a default class 
+		class MyOther
+		  include ZofoPlot::Container
+		  zofo_attributes :color
+		end
+		
 		def test_attributes
+		  my_color=MyColor.new
+      assert_nothing_raised       { my_color.red 0 }
+      assert_raise(ArgumentError) { my_color.red 0,1 }
+		  
 			my_line =MyLine .new
-
+			
 			# Before setting a value
 			assert_nil my_line.color
 
@@ -66,6 +76,16 @@ module ZofoPlot
       my_line.color 0, 127, 255
       assert_equal MyColor, my_line.color.class
       assert_equal [0, 127, 255], my_line.color.to_a
+      
+      # For an attribute without a default class, multiple parameters are not
+      # allowed
+      assert_raise(ArgumentError) { my_line.width 2, 3 }
+
+      # A class with an attribute of the same name - it must not have a default
+      # class (FIXME this does not work)
+      my_other=MyOther.new
+      assert_nothing_raised       { my_other.color 0 }
+      assert_raise(ArgumentError) { my_other.color 1,2,3 }
 		end
 	end
 end

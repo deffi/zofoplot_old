@@ -68,11 +68,19 @@ module ZofoPlot
 	module Container
 		def self.included(klass)
 			klass.extend(ClassMethods)
+
+			# TODO: why doesn't this work?
+			#klass.instance_eval {
+			#  puts "Initialize @@zofo_attributes of #{self}"
+			#  @@zofo_attributes={}
+			#}
 		end
 
 		module ClassMethods
 		  def zofo_attribute(name, klass)
 		    zofo_attributes name
+		    #puts "Added attribute to #{self}"
+		    # FIXME CURRENT this is wrong: it applies to all Containers like this  
 		    @@zofo_attributes ||= {}
 		    @@zofo_attributes[name]=klass
 		    #puts "Added attribute #{name}, now we have #{@@zofo_attributes}"
@@ -93,7 +101,8 @@ module ZofoPlot
 						# Set the value, if a value or multiple values were given
 						unless args.empty?
               # Retrieve the expected class for this attribute
-              expected_class=@@zofo_attributes[attribute]
+						  @@zofo_attributes ||= {}
+						  expected_class=@@zofo_attributes[attribute]
               
               # args.size | expected_class | action | comments
               # ----------+----------------+--------+-----
