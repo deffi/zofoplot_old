@@ -38,6 +38,10 @@ module ZofoPlot
 			end
 		end
 
+		def to_a
+		  [@red, @green, @blue]
+		end
+		
 		def to_gnuplot
 			Kernel.sprintf("rgb '#%02x%02x%02x'", red, green, blue)
 		end
