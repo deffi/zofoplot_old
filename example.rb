@@ -12,45 +12,40 @@ include ZofoPlot
 quadratic_points=(0..5).map { |x| DefaultPoint.new(x, x**2) }
 quadratic_points[4].y_range=[13, 17]
 linear_points=(0..5).map { |x| DefaultPoint.new(x, 5*x) }
+
+lines_chart=Chart.create {
+    title "Some chart"
+    x_axis { range [-0.5, 5.5] ; label "All right"; tics { visible true } }
+    y_axis { range [0, 35]     ; label "Updog"    ; tics { visible true } }
+        
+    data_sets.add {
+        title "Linear"
+        points linear_points
+        line_style  { color "#7fff00"; width 2  }
+        point_style { color "#7f00ff"; shape :filled_triangle_down }
+    }
+
+    data_sets.add {
+        points      quadratic_points
+        line_style  { color "#ff7f00"; width 1  }
+        point_style { color "#7f00ff"; shape :filled_triangle_up }
+    }
+
+    data_sets << DataSet.create {
+        points [[1,5], [3,5], [5,5]].map { |x,y| DefaultPoint.new(x,y) }
+        point_style { shape :open_diamond }
+    }
+}
+
 hexagon_points=(0..6).map { |i|
     alpha=i/6.0*2*Math::PI
     DefaultPoint.new(2*Math::cos(alpha)+2, 2*Math::sin(alpha)+2)
-}
-
-linear_data_set=DataSet.create {
-    points linear_points
-    line_style  { color "#7fff00"; width 2  }
-    point_style { color "#7f00ff"; shape :filled_triangle_down }
-    title "Linear"
-}
-
-quadratic_data_set=DataSet.create {
-    points      quadratic_points
-    line_style  { color "#ff7f00"; width 1  }
-    point_style { color "#7f00ff"; shape :filled_triangle_up }
 }
 
 hexagon_data_set=DataSet.create {
     points hexagon_points
     line_style { color "#007fff" }
     point_style { shape :none }
-}
-
-lines_chart=Chart.create {
-    title "Some chart"
-    x_axis { range [-0.5, 5.5] ; label "All right"; tics {
-            visible true
-        } }
-    y_axis { range [0, 35]     ; label "Updog"; tics {
-            visible true
-        } }
-    data_sets << quadratic_data_set
-    data_sets << linear_data_set
-
-    data_sets << DataSet.create {
-        points [[1,5], [3,5], [5,5]].map { |x,y| DefaultPoint.new(x,y) }
-        point_style { shape :open_diamond }
-    }
 }
 
 hexagon_chart=Chart.create {

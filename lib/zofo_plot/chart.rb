@@ -6,13 +6,14 @@ module ZofoPlot
         include Container
         include Element
 
-        zofo_attributes :data_sets
+        attr_reader :data_sets
+        
         zofo_attributes :x_axis, :y_axis
         zofo_attributes :title
         zofo_attributes :raw_lines
         
         def initialize
-            @data_sets=[]
+            @data_sets=Collection.new(DataSet)
             @x_axis=Axis.new
             @y_axis=Axis.new
             @raw_lines=[]
