@@ -10,7 +10,7 @@ module ZofoPlot
             sq="'"
             dq='"'
             bs='\\'
-            
+
             # Empty string is wrapped in quotes
             assert_equal '""', "".to_gnuplot
         end
