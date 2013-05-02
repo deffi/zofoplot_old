@@ -10,12 +10,14 @@ module ZofoPlot
         
         zofo_attributes :x_axis, :y_axis
         zofo_attributes :title
+        zofo_attributes :border
         zofo_attributes :raw_lines
         
         def initialize
             @data_sets=Collection.new(DataSet)
             @x_axis=Axis.new
             @y_axis=Axis.new
+            @border=Border.new
             @raw_lines=[]
         end
 
@@ -34,6 +36,8 @@ module ZofoPlot
 
             lines << @x_axis.to_gnuplot("x") if @x_axis
             lines << @y_axis.to_gnuplot("y") if @y_axis
+
+            lines << @border.to_gnuplot
 
             lines << "set arrow from graph 1,0 to graph 1.02,0 size screen 0.010,15,60 filled linewidth 1" # Horizontal
             lines << "set arrow from graph 0,1 to graph 0,1.03 size screen 0.010,15,60 filled linewidth 1" # Vertical
