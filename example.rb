@@ -27,12 +27,13 @@ lines_chart=Chart.create {
     }
 
     data_sets.add {
+        title "Quadratic"
         points      quadratic_points
         line_style  { color "#ff7f00"; width 1  }
         point_style { color "#7f00ff"; shape :filled_triangle_up }
     }
 
-    data_sets << DataSet.create {
+    data_sets.add {
         points [[1,5], [3,5], [5,5]].map { |x,y| DefaultPoint.new(x,y) }
         point_style { shape :open_diamond }
     }
