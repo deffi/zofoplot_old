@@ -37,6 +37,10 @@ module ZofoPlot
             end
         end
 
+        def ==(other)
+            self.to_a == other.to_a
+        end
+        
         def to_a
             [@red, @green, @blue]
         end
