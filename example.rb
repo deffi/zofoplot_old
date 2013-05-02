@@ -54,6 +54,9 @@ hexagon_chart=Chart.create {
         logarithmic
         format exponential
     }
+    border {
+        color 127
+    }
     data_sets << hexagon_data_set
 }
 

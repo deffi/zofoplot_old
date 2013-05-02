@@ -1,16 +1,20 @@
 require_relative 'container'
 require_relative 'element'
+require_relative 'color'
 
 module ZofoPlot
     class Border
         include Container
         include Element
 
+        zofo_attribute :color, Color
         zofo_attributes :left, :right, :bottom, :top
                 
         def initialize
             @left =@bottom=true
             @right=@top   =false
+            
+            @color=Color.new
         end
         
         def all
@@ -28,7 +32,15 @@ module ZofoPlot
             value += 4 if @top
             value += 8 if @right
             
-            "set border #{value} back linecolor rgb '#000000' linetype 1 linewidth 1"
+            parts=[]
+
+            parts << "set border #{value}"
+            parts << "back"
+            parts << "linecolor #{@color.to_gnuplot}" if @color
+            parts << "linetype 1"
+            parts << "linewidth 1"
+
+            parts.join(' ')
         end
     end
 end
