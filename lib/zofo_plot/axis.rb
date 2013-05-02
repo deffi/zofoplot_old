@@ -8,6 +8,7 @@ module ZofoPlot
 
         zofo_attributes :range, :is_logarithmic, :label
         zofo_attributes :tics
+        
         def initialize
             @is_logarithmic=nil
             @range=nil
