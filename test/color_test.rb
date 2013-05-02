@@ -12,6 +12,11 @@ module ZofoPlot
             assert_equal [0, 127, 255], Color.new([0, 127, 255]).to_a
             assert_equal [0, 127, 255], Color.new("#007fff").to_a
             assert_equal [0, 127, 255], Color.new("007fff").to_a
+            
+            # From names
+            assert_equal [255, 0, 0], Color.new("red" ) .to_a
+            assert_equal [0, 0, 255], Color.new("blue") .to_a
+            assert_equal [0, 0, 0]  , Color.new("black").to_a
 
             # Invalid creation
             assert_raise(ArgumentError) { Color.new("") }

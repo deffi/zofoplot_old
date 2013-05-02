@@ -11,27 +11,49 @@ module ZofoPlot
         include Container
         include Element
 
+        def self.color_names
+            @color_names ||= { 
+                "red"   => [255, 0, 0],
+                "green" => [0, 255, 0],
+                "blue"  => [0, 0, 255],
+                
+                "yellow"  => [255, 255, 0],
+                "magenta" => [255, 0, 255],
+                "cyan"    => [0, 255, 255],
+    
+                "black"  => [0, 0, 0],
+                "white"  => [255, 255, 255],
+            }
+        end
+        
         zofo_attributes :red, :green, :blue
         def initialize(*args)
             if args.size==0
                 # No arguments - black
                 @red = @green = @blue = 0
+            elsif args.size==1
+                arg=args[0]
+                if arg.is_a?(Array) and arg.size==3
+                    # Array with 3 members
+                    @red, @green, @blue = args[0]
+                elsif arg.is_a?(String)
+                    # String
+                    string=args[0]
+                    if string =~ /^ [#]? (\h{2}) (\h{2}) (\h{2}) $ /x
+                        @red  =$1.to_i(16)
+                        @green=$2.to_i(16)
+                        @blue =$3.to_i(16)
+                    elsif Color.color_names.has_key?(arg)
+                        @red, @green, @blue = Color.color_names[arg]
+                    else
+                        raise ArgumentError, "Unsupported string to create a color: #{string.inspect}"
+                    end
+                else
+                    raise ArgumentError, "Unsupported parameters to create a color: #{args.inspect}"
+                end
             elsif args.size==3
                 # 3 individual arguments
                 @red, @green, @blue = args
-            elsif args.size==1 and args[0].is_a?(Array) and args[0].size==3
-                # Array with 3 members
-                @red, @green, @blue = args[0]
-            elsif args.size==1 and args[0].is_a?(String)
-                # String
-                string=args[0]
-                if string =~ /^ [#]? (\h{2}) (\h{2}) (\h{2}) $ /x
-                    @red  =$1.to_i(16)
-                    @green=$2.to_i(16)
-                    @blue =$3.to_i(16)
-                else
-                    raise ArgumentError, "Unsupported string to create a color: #{string.inspect}"
-                end
             else
                 raise ArgumentError, "Unsupported parameters to create a color: #{args.inspect}"
             end
