@@ -27,7 +27,7 @@ module ZofoPlot
             when /\.png$/ then "pngcairo"
             when /\.svg$/ then "svg"
             when /\.emf$/ then "emf"
-            when /\.pdf$/ then "pdf" # FIXME pdfcairo
+            when /\.pdf$/ then "pdfcairo"
             else raise ArgumentError, "Unrecognized file format: #{filename}"
             end
 
