@@ -17,7 +17,7 @@ lines_chart=Chart.create {
     title "Some chart"
     x_axis { range [-0.5, 5.5] ; label "All right"; tics { visible true; mirror false } }
     y_axis { range [0, 35]     ; label "Updog"    ; tics { visible true; mirror false } }
-    border { none }
+    #border { none }
         
     data_sets.add {
         title "Linear"
