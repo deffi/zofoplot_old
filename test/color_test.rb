@@ -8,10 +8,11 @@ module ZofoPlot
     class ColorTest <Test::Unit::TestCase
         def test_construction
             # Valid creation
-            assert_equal [0, 127, 255], Color.new(0, 127, 255).to_a
-            assert_equal [0, 127, 255], Color.new([0, 127, 255]).to_a
-            assert_equal [0, 127, 255], Color.new("#007fff").to_a
-            assert_equal [0, 127, 255], Color.new("007fff").to_a
+            assert_equal [ 0, 127, 255], Color.new(0, 127, 255).to_a
+            assert_equal [ 0, 127, 255], Color.new([0, 127, 255]).to_a
+            assert_equal [ 0, 127, 255], Color.new("#007fff").to_a
+            assert_equal [ 0, 127, 255], Color.new("007fff").to_a
+            assert_equal [42,  42,  42], Color.new(42).to_a
             
             # From names
             assert_equal [255, 0, 0], Color.new("red" ) .to_a
@@ -23,6 +24,12 @@ module ZofoPlot
             assert_raise(ArgumentError) { Color.new("...") }
             assert_raise(ArgumentError) { Color.new([])  }
             assert_raise(ArgumentError) { Color.new(0, 127, 255, 255) }
+            assert_raise(ArgumentError) { Color.new(-1, 0, 0) }
+            assert_raise(ArgumentError) { Color.new(0, 0, 256) }
+            assert_raise(ArgumentError) { Color.new([-1, 0, 0]) }
+            assert_raise(ArgumentError) { Color.new([0, 0, 256]) }
+            assert_raise(ArgumentError) { Color.new(-1) }
+            assert_raise(ArgumentError) { Color.new(256) }
         end
 
         def test_creation

@@ -35,24 +35,39 @@ module ZofoPlot
                 arg=args[0]
                 if arg.is_a?(Array) and arg.size==3
                     # Array with 3 members
-                    @red, @green, @blue = args[0]
+                    arg.each { |num|
+                        if num<0 || num>255
+                            raise ArgumentError, "Number out of range (0..255): #{num}"
+                        end
+                    }
+                    @red, @green, @blue = arg
                 elsif arg.is_a?(String)
                     # String
-                    string=args[0]
-                    if string =~ /^ [#]? (\h{2}) (\h{2}) (\h{2}) $ /x
+                    if arg =~ /^ [#]? (\h{2}) (\h{2}) (\h{2}) $ /x
                         @red  =$1.to_i(16)
                         @green=$2.to_i(16)
                         @blue =$3.to_i(16)
                     elsif Color.color_names.has_key?(arg)
                         @red, @green, @blue = Color.color_names[arg]
                     else
-                        raise ArgumentError, "Unsupported string to create a color: #{string.inspect}"
+                        raise ArgumentError, "Unsupported string to create a color: #{arg.inspect}"
+                    end
+                elsif arg.is_a?(Numeric)
+                    if arg>=0 && arg<=255
+                        @red=@green=@blue=arg.to_i
+                    else
+                        raise ArgumentError, "Number out of range (0..255): #{arg}"
                     end
                 else
                     raise ArgumentError, "Unsupported parameters to create a color: #{args.inspect}"
                 end
             elsif args.size==3
                 # 3 individual arguments
+                args.each { |num|
+                    if num<0 || num>255
+                        raise ArgumentError, "Number out of range (0..255): #{num}"
+                    end
+                }
                 @red, @green, @blue = args
             else
                 raise ArgumentError, "Unsupported parameters to create a color: #{args.inspect}"
