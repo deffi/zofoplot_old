@@ -15,8 +15,8 @@ linear_points=(0..5).map { |x| DefaultPoint.new(x, 5*x) }
 
 lines_chart=Chart.create {
     title "Some chart"
-    x_axis { range [-0.5, 5.5] ; label "All right"; tics { visible true } }
-    y_axis { range [0, 35]     ; label "Updog"    ; tics { visible true } }
+    x_axis { range [-0.5, 5.5] ; label "All right"; tics { visible true; mirror false } }
+    y_axis { range [0, 35]     ; label "Updog"    ; tics { visible true; mirror false } }
     border { none }
         
     data_sets.add {

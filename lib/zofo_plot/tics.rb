@@ -26,6 +26,7 @@ module ZofoPlot
             if @visible
                 parts << "set #{axis_name}tics"
                 parts << (@is_outside?"out":"in")
+                parts << (@mirror?"mirror":"nomirror")
                 parts << "rotate by #{@rotation}" if @rotation
             else
                 parts << "unset #{axis_name}tics"
