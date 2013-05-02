@@ -50,7 +50,10 @@ hexagon_data_set=DataSet.create {
 }
 
 hexagon_chart=Chart.create {
-    y_axis { logarithmic }
+    y_axis {
+        logarithmic
+        format exponential
+    }
     data_sets << hexagon_data_set
 }
 
