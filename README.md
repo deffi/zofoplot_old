@@ -26,8 +26,11 @@ squares_chart=Chart.create {
   }
 }
     
-my_chart.render "squares_chart.pdf"
-my_chart.render "squares_chart.png"
+my_chart.render "squares_chart.png"  # For quickly viewing
+my_chart.render "squares_chart.eps"  # For LaTeX
+my_chart.render "squares_chart.pdf"  # For pdfLaTeX
+my_chart.render "squares_chart.emf"  # For Microsoft Office
+my_chart.render "squares_chart.svg"  # For the web
 ```
 
 Why is that useful? For example, it allows us to create a large number of graphs using a common point size:
