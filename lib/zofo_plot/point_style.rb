@@ -6,7 +6,7 @@ module ZofoPlot
         include Container
         include Element
 
-        zofo_attributes :shape, :color
+        zofo_attributes :shape, :color, :size
         
         def self.shape_to_gnuplot(point_type)
             case point_type
@@ -31,8 +31,13 @@ module ZofoPlot
         end
 
         def to_gnuplot
-            shape_string=@shape?("pointtype #{PointStyle.shape_to_gnuplot(@shape)}"):("")
-            "#{shape_string}"
+            parts=[]
+                
+            parts << "pointtype #{PointStyle.shape_to_gnuplot(@shape)}" if @shape
+            #parts << "linecolor #{@color.to_gnuplot}" if @color
+            parts << "pointsize #{@size}" if @size
+
+            parts.join(' ')            
         end
     end
 end
