@@ -1,0 +1,102 @@
+== Visual element model ==
+
+Elements:
+
+chart
+- axis[x,y]
+  - ticks
+  - label
+- grid[x,y]
+- series[]
+
+
+chart
+- title
+- subtitle
+- data_sets[]
+
+Attributes:
+
+chart:
+- axes: is an axis (default for x_axis and y_axis)
+- x_axis: is an axis (default: axes)
+- y_axis: is an axis (default: axes)
+- area: is an area
+- border: is a line
+- legend: is a legend
+- text: is a text
+- title: is a text
+- subtitle: is a text
+
+scatter_series:
+- color - default color for line and marker
+- line: is a line
+- marker: is a marker
+
+bar_series:
+- area: is an area
+- border: is a line
+
+legend:
+- area: is an area
+- border: is a line
+- position:
+  - inside left/right/center top/bottom/center
+  - outside left_of/left/center/right/right_of above/top/center/bottom/below
+  - free (anchor point left/center/right top/center/bottom) at positions
+
+axis:
+- line: is a line
+- minimum
+- maximum
+- major_interval
+- minor_interval
+- logarithmic
+- base
+- number_format
+- title: is a text
+
+text:
+- visible
+- font
+- size
+- color
+- background_color
+
+line:
+- visible
+- color
+- alpha
+- width
+- dash_type
+
+area:
+- color
+- alpha
+
+marker:
+- type
+- size
+- filled
+- fill: is an area
+- edge: is a line
+
+
+Open questions:
+* Specify size: of chart, of paper
+* Error bars
+* Point size from data
+* If there are several classes/point sizes/... in one data set, which one is
+  used for the legend?  
+* Trellis
+* Specify positions: in chart coordinates, from left/right/top/bottom
+* Alpha - include in color (RGBA) or as a separate value? 
+* Grid - include in axis or
+* Tics - inside/outside
+* Set attributes for both scatter and bar series with a given class
+
+== Future extensions ==
+* Color gradients
+* Cap/joint style for lines
+* Pattern fill for areas
+
