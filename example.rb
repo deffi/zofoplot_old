@@ -75,17 +75,40 @@ multi_chart=MultiChart.create {
     charts << lines_chart << hexagon_chart
 }
 
+p_chart=Chart.create {
+    x_axis { range [0,6] }
+    y_axis { range [0, 30] }
+    
+    title "{/Verdana=36 ABCDEF abcdef}"
+    #title "ABCDEF abcdef"
+        
+    data_sets.add {
+        points [[1,1],[2,4],[3,9],[4,16],[5,25]].map { |x,y| DefaultPoint.new(x,y) }
+        point_style { color "red"; shape :filled_square; size 1 }
+        line_style { color "red"; width 3 }
+        title "ABCDEF"
+    }
+    data_sets.add {
+        points [[1,1],[2,2],[3,3],[4,4],[5,5]].map { |x,y| DefaultPoint.new(x,y) }
+        point_style { color "blue"; shape :filled_diamond; size 1 }
+        line_style { color "blue"; width 3 }
+        title "abcdef"
+    }
+}
+
 outputs=[
-    [lines_chart  , Pathname.pwd+"example_plots"+"zofo_lines.png"     , [1024, 768]],
-    #	[hexagon_chart, Pathname.pwd+"example_plots"+"zofo_hexagon.png"   , [1024, 768]],
-    [multi_chart  , Pathname.pwd+"example_plots"+"png_small.png"      , [1024, 768]],
-    #	[multi_chart  , Pathname.pwd+"example_plots"+"png_large.png"      , [2048, 1536]],
-    #	[multi_chart  , Pathname.pwd+"example_plots"+"svg_small.svg"      , [1024, 768]],
-    #	[multi_chart  , Pathname.pwd+"example_plots"+"svg_large.svg"      , [2048, 1536]],
-    #	[multi_chart  , Pathname.pwd+"example_plots"+"emf_small.emf"      , [1024, 768]],
-    #	[multi_chart  , Pathname.pwd+"example_plots"+"emf_large.emf"      , [2048, 1536]],
-    #	[multi_chart  , Pathname.pwd+"example_plots"+"pdf_small.pdf"      , [8, 6]],
-    [multi_chart  , Pathname.pwd+"example_plots"+"pdf_large.pdf"      , [16, 12]]
+    #[p_chart , Pathname.pwd+"example_plots"+"p_zofo.pdf", [12/2.54, 8/2.54]],
+    [p_chart , Pathname.pwd+"example_plots"+"p_zofo.png", [900, 600]]
+#    [lines_chart  , Pathname.pwd+"example_plots"+"zofo_lines.png"     , [1024, 768]],
+#    #	[hexagon_chart, Pathname.pwd+"example_plots"+"zofo_hexagon.png"   , [1024, 768]],
+#    [multi_chart  , Pathname.pwd+"example_plots"+"png_small.png"      , [1024, 768]],
+#    #	[multi_chart  , Pathname.pwd+"example_plots"+"png_large.png"      , [2048, 1536]],
+#    #	[multi_chart  , Pathname.pwd+"example_plots"+"svg_small.svg"      , [1024, 768]],
+#    #	[multi_chart  , Pathname.pwd+"example_plots"+"svg_large.svg"      , [2048, 1536]],
+#    #	[multi_chart  , Pathname.pwd+"example_plots"+"emf_small.emf"      , [1024, 768]],
+#    #	[multi_chart  , Pathname.pwd+"example_plots"+"emf_large.emf"      , [2048, 1536]],
+#    #	[multi_chart  , Pathname.pwd+"example_plots"+"pdf_small.pdf"      , [8, 6]],
+#    [multi_chart  , Pathname.pwd+"example_plots"+"pdf_large.pdf"      , [16, 12]],
 ]
 
 Engine.new { |engine|
@@ -97,7 +120,8 @@ Engine.new { |engine|
 }
 
 #file=Pathname.pwd+"example_plots"+"zofo_lines.png"
-file=Pathname.pwd+"example_plots"+"png_small.png"
+#file=Pathname.pwd+"example_plots"+"png_small.png"
+file=Pathname.pwd+"example_plots"+"p_zofo.png"
 if file.exist?
     Kernel.system "start #{file}"
 else
