@@ -24,7 +24,7 @@ module ZofoPlot
 
             terminal=case filename.to_s
             when nil      then nil
-            when /\.png$/ then "pngcairo"
+            when /\.png$/ then "pngcairo fontscale 1"
             when /\.svg$/ then "svg"
             when /\.emf$/ then "emf"
             when /\.pdf$/ then "pdfcairo"
