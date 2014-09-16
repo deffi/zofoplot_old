@@ -1,101 +1,104 @@
-== Visual element model ==
+Next thoughts:
+* With HTML and CSS, we have two different parts of the model: DOM elements and
+  style attributes. Should we do the same? In that case, we'll have to answer
+  the question where different elements belong:
+  * Some things - e. g. series - are explicitly listed by the user and there can
+    be an arbitrary number. Clearly, this should be part of the DOM.
+  * Some things - e. g. the width of a line - is an attribute
+  * For some things - e. g. axes - there is a fixed number (x and y). Should
+    this be part of the DOM? HTML borders are not: there is an attribute
+    border-width and border-left-width etc. I'd say it should go into the DOM.
+  * For some things, the situation is less clear. For example,
+    series.point.marker is not explicitly listed by the user. Do we want
+      "series point { marker-size: 5 } or
+      "series point marker { size: 5 } ?
+    Keep in mind that the marker size may be defined by data.
+  Or, we get rid of the distinction altogether and just define a homogeneous
+  tree.
+  Let's try a HTML-like approach first: everything of which there can be more
+  than one, or none, is part of the object tree. This is different from the HTML
+  model in that HTML has border-left-width, etc. 
 
-Elements:
-
-chart
-- axis[x,y]
-  - ticks
-  - label
-- grid[x,y]
-- series[]
 
 
-chart
-- title
-- subtitle
-- data_sets[]
+Object model:
+* chart
+  * series[]
+    * point[]
+  * axis[x,y]
+  * grid[x,y]
+  * title
+  * label[x,y]
+  * legend
 
 Attributes:
+* chart:
+  * ...
+* axis:
+  * label, number_format
+  * minimum, maximum, major_interval, minor_interval
+  * logarithmic, base
+* series:
+  marker: width, color, opacity, dash-type
+  line: width, color, opacity, dash-type
+* point:
+  * color
+  * marker
+    * shape
+    * filled
+    * area
+      * color
+      * opacity
+    * border -> line
+      * width
+      * color
+      * opacity
+  * line -> line
+* axis:
+  * label
+    * font -> font
+    * text
+* legend:
+  * area
+  * border
+  * position
+  * font
+    
 
-chart:
-- axes: is an axis (default for x_axis and y_axis)
-- x_axis: is an axis (default: axes)
-- y_axis: is an axis (default: axes)
-- area: is an area
-- border: is a line
-- legend: is a legend
-- text: is a text
-- title: is a text
-- subtitle: is a text
 
-scatter_series:
-- color - default color for line and marker
-- line: is a line
-- marker: is a marker
 
-bar_series:
-- area: is an area
-- border: is a line
 
-legend:
-- area: is an area
-- border: is a line
-- position:
-  - inside left/right/center top/bottom/center
-  - outside left_of/left/center/right/right_of above/top/center/bottom/below
-  - free (anchor point left/center/right top/center/bottom) at positions
 
-axis:
-- line: is a line
-- minimum
-- maximum
-- major_interval
-- minor_interval
-- logarithmic
-- base
-- number_format
-- title: is a text
+== TODO ==
 
-text:
-- visible
-- font
-- size
-- color
-- background_color
+Object model:
+* inheriting attributes so we can write
+      "series.foo { marker.color: #ff0000 }"
+  instead of
+      "series.foo point { marker.color: #ff0000 }"
+  We may also need this for the legend entry.
+* CSS also has: "p { border: 5px solid red }"  
 
-line:
-- visible
-- color
-- alpha
-- width
-- dash_type
-
-area:
-- color
-- alpha
-
-marker:
-- type
-- size
-- filled
-- fill: is an area
-- edge: is a line
-
+Functionality:
+* Equalizing y range for function (as opposed to points):
+  * what range to include?
+  * specify x range for which to include the y range? i. e. "The function must be
+    visible between x=0 and x=60"
 
 Open questions:
-* Specify size: of chart, of paper
+* Specify size: of chart, of canvas
 * Error bars
 * Point size from data
 * If there are several classes/point sizes/... in one data set, which one is
   used for the legend?  
-* Trellis
+* Trellis (adjacent charts with only one axis per direction)
 * Specify positions: in chart coordinates, from left/right/top/bottom
 * Alpha - include in color (RGBA) or as a separate value? 
-* Grid - include in axis or
+* Grid - include in axis or separate
 * Tics - inside/outside
 * Set attributes for both scatter and bar series with a given class
 
-== Future extensions ==
+Effects:
 * Color gradients
 * Cap/joint style for lines
 * Pattern fill for areas
