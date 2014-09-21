@@ -13,9 +13,9 @@ xml_document = '''\
 '''
 
 css_document = '''\
-chart.polynomials, chart.exponentials { color: red }
+chart.polynomials, chart.exponentials { color: red } /* Not red, overridden later */
 chart.polynomials, chart.exponentials { color: black } /* Must be black */
-chart { background-color: white; color: brown }
+chart { background-color: white; color: brown } /* Not brown, less specific */
 point { marker-size: 4 }
 dataset.even point { filled: true }
 dataset.odd point { filled: false }
@@ -40,7 +40,7 @@ class XmlPropertyValueList(list):
     'Contains XmlPropertyValues' 
     def resolve(self):
         sort_key = lambda property_value: property_value.specificity
-        return sorted(self, key = sort_key)[0].value # FIXME not [0], [latest]
+        return sorted(self, key = sort_key)[-1].value
 
 # A dictionary mapping a property name to a value list
 class XmlPropertyDict(defaultdict):
@@ -56,23 +56,19 @@ class XmlPropertyDict(defaultdict):
 # A dictionary that maps an element to a property dictionary
 xml_properties = defaultdict(lambda: XmlPropertyDict())
 
-# xml_properties["moo"]["x"].append(10)
-# xml_properties["moo"]["x"].append(11)
-# xml_properties["moo"]["y"].append(20)
-# xml_properties["moo"]["x"].append(12)
-
-
  
+rule_index = 0
 css = cssutils.parseString(css_document, validate = False)
 rules = css.cssRules
 for rule in rules:
+    rule_index += 1
     if rule.type == CSSRule.STYLE_RULE:
         selectors = rule.selectorList
         properties = rule.style.getProperties()
  
         for selector in selectors:
             selector_text = selector.selectorText
-            specificity   = selector.specificity
+            specificity   = selector.specificity + (rule_index, )
              
             for property_ in properties:
                 name  = property_.name
