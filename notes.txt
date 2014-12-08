@@ -103,3 +103,6 @@ Effects:
 * Cap/joint style for lines
 * Pattern fill for areas
 
+Others:
+* Broken axis ('-----//-------> x)
+
