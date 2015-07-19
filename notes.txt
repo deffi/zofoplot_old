@@ -1,26 +1,3 @@
-Next thoughts:
-* With HTML and CSS, we have two different parts of the model: DOM elements and
-  style attributes. Should we do the same? In that case, we'll have to answer
-  the question where different elements belong:
-  * Some things - e. g. series - are explicitly listed by the user and there can
-    be an arbitrary number. Clearly, this should be part of the DOM.
-  * Some things - e. g. the width of a line - is an attribute
-  * For some things - e. g. axes - there is a fixed number (x and y). Should
-    this be part of the DOM? HTML borders are not: there is an attribute
-    border-width and border-left-width etc. I'd say it should go into the DOM.
-  * For some things, the situation is less clear. For example,
-    series.point.marker is not explicitly listed by the user. Do we want
-      "series point { marker-size: 5 } or
-      "series point marker { size: 5 } ?
-    Keep in mind that the marker size may be defined by data.
-  Or, we get rid of the distinction altogether and just define a homogeneous
-  tree.
-  Let's try a HTML-like approach first: everything of which there can be more
-  than one, or none, is part of the object tree. This is different from the HTML
-  model in that HTML has border-left-width, etc. 
-
-
-
 Object model:
 * chart
   * series[]
@@ -64,15 +41,6 @@ Attributes:
   * position
   * font
     
-
-
-== Goals ==
-
-Time on axis, e. g. "14:05", "14:06", etc.; works well and is customizable in
-Gnuplot. If every minute does not fit, every n-th minute must be displayed.
-Gnuplot also allows multi-line labels.
-
-Be able to define names, then plot(temmperatur, fan) or plot(time, temperature)
 
 
 
