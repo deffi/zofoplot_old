@@ -38,8 +38,8 @@ leg = ax2.legend(handles, labels, loc="center left", bbox_to_anchor = (1, 0.5))
 #ax1.set_title("Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla title")
 12
 ax1.set_title("Bla bla title")
-#fig.savefig('moo.png', bbox_extra_artists=(leg,), bbox_inches='tight')
-fig.savefig('moo.png', bbox_inches='tight')
-os.system("start moo.png")
+#fig.savefig('matplotlib_test_output.png', bbox_extra_artists=(leg,), bbox_inches='tight')
+fig.savefig('matplotlib_test_output.png', bbox_inches='tight')
+os.system("start matplotlib_test_output.png")
 
 #plt.show()
