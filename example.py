@@ -107,3 +107,37 @@ chart[hexagon] {
 #     puts "#{file} does not exist."
 # end
 
+
+
+# Yet another
+# 
+# import numpy as np
+# 
+# x = np.arange(-2, 2, 0.2)
+# 
+# chart = Chart()
+# linear    = chart.add_series(x=x, y=x**1, label="Linear"   , classes="odd" )
+# quadratic = chart.add_series(x=x, y=x**2, label="Quadratic", classes="even")
+# cubic     = chart.add_series(x=x, y=x**3, label="Cubic"    , classes="odd" )
+# 
+# 
+# linear.set_style("marker.area.color", "#ffff00")
+# 
+# 
+# chart.show()
+# 
+# 
+# '''
+# series["linear"   ].marker.shape = "o"
+# series["quadratic"].marker.shape = "s"
+# series["cubic"    ].marker.shape = "d"
+# 
+# series             .marker.filled = "true"
+# series["even"     ].marker.filled = "false"
+# 
+# '''
+
+
+
+
+

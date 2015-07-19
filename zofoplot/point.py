@@ -1,0 +1,2 @@
+class Point(Item):
+    pass
